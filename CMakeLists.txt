@@ -3,4 +3,4 @@ project(1C_task)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(1C_task main.cpp)
+add_executable(1C_task main.cpp Card.cpp State.cpp)
