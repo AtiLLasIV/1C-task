@@ -7,7 +7,7 @@
 class Card {
  public:
   Card(int value, char suit);
-  Card(const std::string& str);
+  explicit Card(const std::string& str);
   bool operator<(const Card& other) const;
 
  private:

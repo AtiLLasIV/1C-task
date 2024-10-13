@@ -1,62 +1,17 @@
-#include <iostream>
 #include <vector>
-#include <set>
-#include <string>
-#include <queue>
 
-#include "src/Card.h"
-#include "src/State.h"
+#include "src/structures/Card.h"
+#include "src/structures/State.h"
+#include "src/algorithms/bfs_solitaire.h"
+#include "src/inputs/inputs.h"
 
-
-int BFS_Solitaire(State& start) {
-  std::queue<State> queue;
-  std::set<State> visited;
-  queue.push(start);
-  visited.insert(start);
-
-  while(!queue.empty()) {
-    State current = queue.front();
-    queue.pop();
-    if (current.IsAllStacksEmpty()) {
-      return current.move;
-    }
-    for (State& state : current.GetNeighboringStates()) {
-      if (!visited.contains(state)) {
-        visited.insert(state);
-        queue.push(state);
-      }
-    }
-  }
-  return -1;
-}
-
-
-// для тестов (вводим кучки поочередно, начиная с нижней карты, заканчивая верхней)
-void FastInput(std::vector<std::vector<Card>>& stacks) {
-  for (int i = 0; i < stacks.size(); i++) {
-    for (int j = 0; j < 8; j++) {
-      std::string card_str;
-      std::cin >> card_str;
-      stacks[i].emplace_back(card_str);
-    }
-  }
-}
-
-// просто отдельно кучки раскладываем
-void BeautyInput(std::vector<std::vector<Card>>& stacks) {
-  // to-do
-}
-
-// Программа не выключается сама, только после exit, возможность несколько раз ввести разные ситуации
-void ProgramLoop() {
-  // to-do
-}
-
-int main() {
-  /// Сделать функцию:
+void Loop(bool is_beauty) {
   std::vector<std::vector<Card>> stacks(2);
-  FastInput(stacks);
-  // BeautyInput(stacks);
+  if (is_beauty) {
+    BeautyInput(stacks);
+  } else {
+    FastInput(stacks);
+  }
 
   State start_state(stacks, 0);
   int result = BFS_Solitaire(start_state);
@@ -66,5 +21,34 @@ int main() {
   } else {
     std::cout << "Решается за " << result << " ходов" << std::endl;
   }
+}
 
+void ProgramLoop() {
+  std::cout << "Данная программа определяет, возможно ли выиграть в пасьянс" << std::endl;
+  std::cout << "Карты вводится в формате: ЗначениеМасть (к примеру JH - Валет Червей)" << std::endl;
+  std::cout << "Значения: J - Валет, Q - Королева, K - Король, A - туз" << std::endl;
+  std::cout << "(числа соответствуют сами себе)" << std::endl;
+  std::cout << "-------------------------------" << std::endl;
+  while(true) {
+    std::cout << "Какой режим ввода Вы хотите выбрать: ускоренный(0), обычный(1), выйти из программы (exit)" << std::endl;
+    std::string input_type;
+    bool is_beauty;
+    std::cin >> input_type;
+    if (input_type == "exit") {
+      break;
+    }
+    if (input_type == "0") {
+      is_beauty = false;
+    } else if (input_type == "1") {
+      is_beauty = true;
+    } else {
+      continue;
+    }
+    Loop(is_beauty);
+  }
+}
+
+
+int main() {
+  ProgramLoop();
 }
