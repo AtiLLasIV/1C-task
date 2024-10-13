@@ -4,8 +4,8 @@
 #include <string>
 #include <queue>
 
-#include "Card.h"
-#include "State.h"
+#include "src/Card.h"
+#include "src/State.h"
 
 
 int BFS_Solitaire(State& start) {
