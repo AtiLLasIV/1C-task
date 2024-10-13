@@ -31,10 +31,10 @@ int BFS_Solitaire(State& start) {
 }
 
 
-// для тестов
+// для тестов (вводим кучки поочередно, начиная с нижней карты, заканчивая верхней)
 void FastInput(std::vector<std::vector<Card>>& stacks) {
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j < 9; j++) {
+  for (int i = 0; i < stacks.size(); i++) {
+    for (int j = 0; j < 8; j++) {
       std::string card_str;
       std::cin >> card_str;
       stacks[i].emplace_back(card_str);
@@ -54,7 +54,7 @@ void ProgramLoop() {
 
 int main() {
   /// Сделать функцию:
-  std::vector<std::vector<Card>> stacks(8);
+  std::vector<std::vector<Card>> stacks(2);
   FastInput(stacks);
   // BeautyInput(stacks);
 

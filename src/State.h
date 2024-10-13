@@ -11,8 +11,10 @@ class State {
 
   State(std::vector<std::vector<Card>> stacks, int move);
   std::vector<State> GetNeighboringStates();
-  bool operator<(const State& other) const;
+  bool IsInOrder(const std::vector<Card>& stack) const;
+  void Cleaner();
   bool IsAllStacksEmpty() const;
+  bool operator<(const State& other) const;
 };
 
 #endif //STATE_H

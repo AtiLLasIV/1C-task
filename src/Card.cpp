@@ -17,6 +17,6 @@ bool Card::operator<(const Card& other) const {
 }
 
 std::unordered_map<char, int> Card::value_dict_ = {
-    {'A', 1}, {'6', 2}, {'7', 3}, {'8', 4},
-    {'9', 5}, {'J', 6}, {'Q', 7}, {'K', 8}
+    {'6', 1}, {'7', 2}, {'8', 3}, {'9', 4},
+    {'J', 5}, {'Q', 6}, {'K', 7}, {'A', 8},
 };

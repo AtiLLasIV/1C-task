@@ -1,20 +1,17 @@
 #include "State.h"
 
-#include <queue>
-#include <set>
-
 State::State(std::vector<std::vector<Card>> stacks, int move)
-    : stacks(std::move(stacks)), move(move) {}
+    : stacks(std::move(stacks)), move(move) { Cleaner(); }
 
 std::vector<State> State::GetNeighboringStates() {
   std::vector<State> next_states;
 
-  for (size_t i = 0; i < 8; ++i) {
+  for (size_t i = 0; i < stacks.size(); ++i) {
     if (stacks[i].empty()) {
       continue;
     }
     Card from = stacks[i].back();
-    for (size_t j = i + 1; j < 8; ++j) {
+    for (size_t j = i + 1; j < stacks.size(); ++j) {
       if (stacks[j].empty()) {
         continue;
       }
@@ -30,14 +27,21 @@ std::vector<State> State::GetNeighboringStates() {
   return next_states;
 }
 
-bool State::operator<(const State& other) const {
-  if (stacks < other.stacks) {
-    return true;
+bool State::IsInOrder(const std::vector<Card>& stack) const {
+  for (size_t i = 1; i < stack.size(); ++i) {
+    if (!(stack[i] < stack[i - 1])) {
+      return false;
+    }
   }
-  if (stacks > other.stacks) {
-    return false;
+  return true;
+}
+
+void State::Cleaner() {
+  for (auto& stack : stacks) {
+    if (stack.size() == 9 && IsInOrder(stack)) {
+      stack.clear();
+    }
   }
-  return move < other.move;
 }
 
 bool State::IsAllStacksEmpty() const {
@@ -47,4 +51,14 @@ bool State::IsAllStacksEmpty() const {
     }
   }
   return true;
+}
+
+bool State::operator<(const State& other) const {
+  if (stacks < other.stacks) {
+    return true;
+  }
+  if (stacks > other.stacks) {
+    return false;
+  }
+  return move < other.move;
 }
